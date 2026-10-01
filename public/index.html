@@ -94,11 +94,38 @@
     <button onclick="alert('¡Botón pulsado!')">Pulsa aquí</button>
 
     <h2>Usuarios</h2>
-    <ul>
-      <li>1 - Juan</li>
-      <li>2 - Maria</li>
-      <li>3 - Pedro</li>
+    <ul id="lista-usuarios">
+      <li>Cargando usuarios...</li>
     </ul>
   </div>
+
+  <script>
+    // Pide los usuarios a la API y los pinta en la lista
+    async function cargarUsuarios() {
+      const lista = document.getElementById("lista-usuarios");
+
+      try {
+        const respuesta = await fetch("/usuarios");
+
+        if (!respuesta.ok) {
+          throw new Error("Error HTTP: " + respuesta.status);
+        }
+
+        const usuarios = await respuesta.json();
+
+        lista.innerHTML = "";
+        usuarios.forEach((usuario) => {
+          const li = document.createElement("li");
+          li.textContent = usuario.id + " - " + usuario.nombre;
+          lista.appendChild(li);
+        });
+      } catch (error) {
+        lista.innerHTML = "<li>Error al cargar los usuarios</li>";
+        console.error(error);
+      }
+    }
+
+    cargarUsuarios();
+  </script>
 </body>
 </html>
