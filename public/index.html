@@ -69,6 +69,7 @@
 
     ul {
       list-style: none;
+      margin-bottom: 30px;
     }
 
     li {
@@ -97,19 +98,21 @@
     <ul id="lista-usuarios">
       <li>Cargando usuarios...</li>
     </ul>
+
+    <h2>Productos</h2>
+    <ul id="lista-productos">
+      <li>Cargando productos...</li>
+    </ul>
   </div>
 
   <script>
-    // Pide los usuarios a la API y los pinta en la lista
+    // ---- Usuarios ----
     async function cargarUsuarios() {
       const lista = document.getElementById("lista-usuarios");
 
       try {
         const respuesta = await fetch("/usuarios");
-
-        if (!respuesta.ok) {
-          throw new Error("Error HTTP: " + respuesta.status);
-        }
+        if (!respuesta.ok) throw new Error("Error HTTP: " + respuesta.status);
 
         const usuarios = await respuesta.json();
 
@@ -125,7 +128,33 @@
       }
     }
 
+    // ---- Productos ----
+    async function cargarProductos() {
+      const lista = document.getElementById("lista-productos");
+
+      try {
+        const respuesta = await fetch("/productos");
+        if (!respuesta.ok) throw new Error("Error HTTP: " + respuesta.status);
+
+        const productos = await respuesta.json();
+
+        lista.innerHTML = "";
+        productos.forEach((producto) => {
+          const li = document.createElement("li");
+          li.textContent =
+            producto.id + " - " + producto.nombre + " - $" +
+            producto.precio.toLocaleString("es-ES");
+          lista.appendChild(li);
+        });
+      } catch (error) {
+        lista.innerHTML = "<li>Error al cargar los productos</li>";
+        console.error(error);
+      }
+    }
+
+    // Ejecutamos las dos al cargar la página
     cargarUsuarios();
+    cargarProductos();
   </script>
 </body>
 </html>

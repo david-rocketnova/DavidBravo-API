@@ -8,11 +8,18 @@ app.use(express.json());
 // Sirve los archivos estáticos de la carpeta "public" (index.html, css, etc.)
 app.use(express.static("public"));
 
-// ---- Datos de ejemplo (en memoria, sin base de datos todavía) ----
+// ---- Datos de ejemplo: usuarios ----
 const usuarios = [
   { id: 1, nombre: "Juan" },
   { id: 2, nombre: "Maria" },
   { id: 3, nombre: "Pedro" }
+];
+
+// ---- Datos de ejemplo: productos ----
+const productos = [
+  { id: 1, nombre: "Pizza", precio: 30000 },
+  { id: 2, nombre: "Hamburguesa", precio: 25000 },
+  { id: 3, nombre: "Coca-Cola", precio: 10000 }
 ];
 
 // ---- Endpoint de salud ----
@@ -38,6 +45,11 @@ app.get("/usuarios/:id", (req, res) => {
   }
 
   res.json(usuario);
+});
+
+// ---- TAREA 6: GET /productos -> lista de productos ----
+app.get("/productos", (req, res) => {
+  res.json(productos);
 });
 
 app.listen(PORT, () => {
