@@ -5,6 +5,9 @@ const PORT = process.env.PORT || 3000;
 // Permite leer JSON en el body (nos hará falta en tareas futuras)
 app.use(express.json());
 
+// Sirve los archivos estáticos de la carpeta "public" (index.html, css, etc.)
+app.use(express.static("public"));
+
 // ---- Datos de ejemplo (en memoria, sin base de datos todavía) ----
 const usuarios = [
   { id: 1, nombre: "Juan" },
@@ -12,17 +15,12 @@ const usuarios = [
   { id: 3, nombre: "Pedro" }
 ];
 
-// ---- Endpoint raíz ----
-app.get("/", (req, res) => {
-  res.type("text/plain").send("HOLA SOY DAVID BRAVO");
-});
-
 // ---- Endpoint de salud ----
 app.get("/health", (req, res) => {
   res.json({ status: "ok", service: "davidbravo-API" });
 });
 
-// ---- TAREA 2: GET /usuarios -> devuelve la lista completa en JSON ----
+// ---- TAREA 2: GET /usuarios -> lista completa ----
 app.get("/usuarios", (req, res) => {
   res.json(usuarios);
 });
