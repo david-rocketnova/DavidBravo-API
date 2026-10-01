@@ -10,6 +10,16 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok", service: "davidbravo-API" });
 });
 
+const usuarios = [
+  { id: 1, nombre: 'Juan' },
+  { id: 2, nombre: 'Maria' },
+  { id: 3, nombre: 'Pedro' }
+];
+
+app.get('/usuarios', (req, res) => {
+  res.json(usuarios);
+});
+
 app.listen(PORT, () => {
   console.log("Servidor escuchando en el puerto " + PORT);
 });
