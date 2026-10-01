@@ -1,6 +1,7 @@
 {
   "name": "davidbravo-api",
   "version": "1.0.0",
+  "description": "API de practica con Node.js y Express",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
